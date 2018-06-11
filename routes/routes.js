@@ -30,6 +30,30 @@ var appRouter = function (app) {
 			res.status(400).send({ message: 'invalid number supplied'});
 		}
 	});
+
+	app.get("/students", function(req, res){
+		var students = [];
+		var mysql = require('mysql');
+		var con = mysql.createConnection({
+			host: "localhost",
+			user: "test",
+			password: "test",
+			database: "Hogwarts"
+		});
+
+		con.connect(function(err) {
+			if (err) throw err;
+			console.log("Connected!");
+			con.query('SELECT * FROM Students', function (err, result){
+				if (err) throw err;
+				for (i =0; i < result.length; i++)
+				{
+					console.log(result[i]);
+				}
+
+			})
+		})
+	})
 }
 
 module.exports = appRouter;
